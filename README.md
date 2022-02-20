@@ -6,11 +6,30 @@ pip3 install httpx && pip3 install httpx[http2] && pip3 install requests && pip3
 Or: python3 setup.py install
 ```
 
+## Roadmap
+
+*  - [x] Login QR
+    *  - [x] IMAGE
+    *  - [x] LINK
+*  - [x] Support APP
+    *  - [x] ANDROIDLITE
+    *  - [x] DESKTOPMAC
+    *  - [x] CHROMEOS
+*  - [x] TransPORT - POLL
+    *  - [x] TALK
+    *  - [x] POLL
+    *  - [x] LIFF 
+
+Tutorial video is below please click And Youtube:
+
+[Tutorial Video Youtube Click ! ](https://www.youtube.com/watch?v=wBtC7nR9L8Y)
+
+
+https://user-images.githubusercontent.com/33949668/154867420-fe264102-d558-4746-9bb2-4e62c2fd1703.mp4
 
 
 
 
-[![Watch the video](https://i.hizliresim.com/nrxcw8m.png)](https://www.youtube.com/watch?v=wBtC7nR9L8Y)
 
 - ✏️ Bug Report Line ID: cybertk0 
 
