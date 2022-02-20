@@ -9,7 +9,7 @@ botData = json.load(botData)
 
 # if you will use template don't use androidlite
 
-_tkr = APP("androidlite",
+_tkr = APP("desktopmac",
            botData=botData) # CHROMEOS DESKTOPMAC ANDROIDLITE
 
 
