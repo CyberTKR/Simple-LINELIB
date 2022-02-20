@@ -77,30 +77,19 @@ class Commands(object):
                 
                 ############## UNSEND - MESSAGE ##############
                 
-            elif opText.startswith("unsend"):
-                args = opText.replace("unsend ","")
-                mes = 0
-                try:
-                    mes = int(args)
-                except:
-                    mes = 1
-                M = self.laylay.getResend(opTo, 101)
-                MId = []
-                for ind,i in enumerate(M):
-                    if ind == 0:
-                        pass
-                    else:
-                        if i._from == self.laylay.profile.mid:
-                            MId.append(i.id)
-                            if len(MId) == mes:
-                                break
-                def unsMes(id):
-                    self.laylay.unsendMessage(id)                                
-                for i in MId:
-                    thread1 = threading.Thread(target=unsMes, args=(i,))
-                    thread1.start()
-                    thread1.join()
-                self.laylay.sendMessage(opTo, '「 {} mesaj başarıyla geri alındı 」'.format(len(MId)))
+			elif opText.startswith('unsend'):
+				args=opText.replace('unsend ','');mes=0
+				try:mes=int(args)
+				except:mes=1
+				M=self.laylay.getResend(opTo,101);MId=[]
+				for (ind,i) in enumerate(M):
+					if ind==0:pass
+					elif i._from==self.laylay.profile.mid:
+						MId.append(i.id)
+						if len(MId)==mes:break
+				def unsMes(id):self.laylay.unsendMessage(id)
+				for i in MId:thread1=threading.Thread(target=unsMes,args=(i,));thread1.start();thread1.join()
+				self.laylay.sendMessage(opTo,'「 {} message successfully retrieved 」'.format(len(MId)))
                 
         except Exception as r:
             print(r)
