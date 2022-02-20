@@ -1,0 +1,133 @@
+from talk_functions import *
+import json
+
+class Commands(object):
+    def __init__(self,botData,_tkr):
+        self.laylay = _tkr
+        self.botData = botData
+            
+    def _UserReceiveMessage(self,_tk):
+        try:
+            opMessage = _tk.message
+            opText = str(opMessage.text).lower()
+            opTo = opMessage.to
+            opFrom = opMessage._from
+            
+            if opText.startswith("hello"):
+                self.laylay.sendMessage(opTo,"Hello I'm CyberTK?")
+                
+                
+                ############## GROUP - LIST ##############
+                
+            elif opText.startswith("glist"):
+                forNum = 1
+                header = " * Chat List * \n\n"
+                for groups in self.laylay.getAllChatMids().memberChatMids:
+                    header += f"{forNum}. Chat: {self.laylay.getChats([groups]).chats[0].chatName}\n{self.laylay.getChats([groups]).chats[0].chatMid}\n"
+                    forNum += 1
+                self.laylay.sendMessage(opTo,header)
+                
+                ############## LIFF - CHECK ##############
+                
+            elif opText.startswith("liff"):
+                self.laylay.sendMessage(opTo,"https://liff.line.me/1656820974-jwLYk4JB")
+
+                ############## TAGALL - MESSAGE ##############
+                
+            elif opText.startswith("tagall"):
+                group=self.laylay.getChats([opTo]).chats[0].extra.groupExtra.memberMids;_mntmd=[]
+                for midss in group:_mntmd.append(midss)
+                _mdmmbrs=_mntmd;_mdslct=len(_mdmmbrs)//20
+                for _mntmmbrs in range(_mdslct+1):
+                    ret_='* Mention List *\n';_n=1;_dtmd=[]
+                    for _dtmnt in _mntmd[_mntmmbrs*20:(_mntmmbrs+1)*20]:_dtmd.append(_dtmnt);ret_+='\n\n{}. @!\n'.format(str(_n));_n=_n+1
+                    ret_+='\n\n「 Toplam {} Kullanici 」'.format(str(len(_dtmd)));self.laylay.sendMention(opTo,ret_,_dtmd)
+                             
+                ############## BROADCAST - MESSAGE ##############
+                
+            elif opText.startswith("broadcast"):
+                if time.time()  - self.botData["LiffTokenTime"] > int(86400):
+                    self.laylay.TokenCreate()
+                    self.botData["LiffTokenTime"] = time.time()
+                    self.backupData()
+                    print("True")
+                else:print("False")
+                for groups in self.laylay.getAllChatMids().memberChatMids:
+                    if groups not in self.botData["GroupLiffToken"]:
+                        self.laylay.TokenSingle(groups)
+                    limg = 'https://i.hizliresim.com/ts0xzxx.png'
+                    label = "CyberTK ©"
+                    data = {
+                        "type": "text",
+                        "text": "{}".format("Merhaba Test New Template System"),
+                        "sentBy": {
+                            "label": "%s"%label,
+                            "iconUrl": '%s'%limg,
+                            "linkUrl": "line://nv/profilePopup/mid=u84e53963a1e708c353e4b16d932e0da0"
+                        }
+                    }
+                    lifftoken = self.botData["GroupLiffToken"][groups]["Token"]
+                    self.laylay.sendLiff(data,lifftoken)
+                    time.sleep(1)
+                self.laylay.sendMessage(opTo,"Tamamdir")
+               
+                
+                ############## UNSEND - MESSAGE ##############
+                
+            elif opText.startswith("unsend"):
+                args = opText.replace("unsend ","")
+                mes = 0
+                try:
+                    mes = int(args)
+                except:
+                    mes = 1
+                M = self.laylay.getResend(opTo, 101)
+                MId = []
+                for ind,i in enumerate(M):
+                    if ind == 0:
+                        pass
+                    else:
+                        if i._from == self.laylay.profile.mid:
+                            MId.append(i.id)
+                            if len(MId) == mes:
+                                break
+                def unsMes(id):
+                    self.laylay.unsendMessage(id)                                
+                for i in MId:
+                    thread1 = threading.Thread(target=unsMes, args=(i,))
+                    thread1.start()
+                    thread1.join()
+                self.laylay.sendMessage(opTo, '「 {} mesaj başarıyla geri alındı 」'.format(len(MId)))
+                
+        except Exception as r:
+            print(r)
+
+    def _UserSendMessage(self,_tk):
+            opMessage = _tk.message
+            opText = str(opMessage.text).lower()
+            opTo = opMessage.to
+            if opText.startswith("naber"):
+                self.laylay.sendMessage(opTo,"Okay ?")
+                print("Hello")
+                
+    def _UserDeleteOtherFromChat(self,_tk):
+           pass
+    def _NotifInviteIntoChat(self,_tk):
+        if _tk.param3 in self.laylay.profile.mid:
+            self.laylay.acceptChatInvitation(_tk.param1)
+    def _UserNotifLeaveChat(self,_tk):
+           pass
+    def _UserNotifJoinChat(self,_tk):
+           pass
+    def _UserNotifUpdateChat(self,_tk):
+           pass
+    def _UserNotifCancelChat(self,_tk):
+           pass
+    def _UserNotifRejectChat(self,_tk):
+           pass
+    def _UserNotifAddFolow(self,_tk):
+           pass
+    def _UserNotifDellFolow(self,_tk):
+           pass
+    def _LineUpdateApp(self,_tk):
+           pass
