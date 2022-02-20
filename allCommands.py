@@ -7,6 +7,9 @@ class Commands(object):
         self.botData = botData
             
     def _UserReceiveMessage(self,_tk):
+        pass
+
+    def _UserSendMessage(self,_tk):
         try:
             opMessage = _tk.message
             opText = str(opMessage.text).lower()
@@ -101,14 +104,6 @@ class Commands(object):
                 
         except Exception as r:
             print(r)
-
-    def _UserSendMessage(self,_tk):
-            opMessage = _tk.message
-            opText = str(opMessage.text).lower()
-            opTo = opMessage.to
-            if opText.startswith("naber"):
-                self.laylay.sendMessage(opTo,"Okay ?")
-                print("Hello")
                 
     def _UserDeleteOtherFromChat(self,_tk):
            pass
