@@ -37,7 +37,7 @@ class APP(object):
             self._qrLogin()
             
         self._tpath = self._RunTransPort("/S4")
-        self._ppath = self._RunTransPort("/P4")
+        self._ppath = self._RunTransPort("/P5")
         self.liff  = self._LiffTransPort()
         self.revision = -1
         self.globRevison = 0
