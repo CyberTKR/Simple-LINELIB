@@ -7,8 +7,10 @@ import codecs,livejson
 botData = codecs.open("Data.json","r","utf-8")
 botData = json.load(botData)
 
+# if you will use template don't use androidlite
+
 _tkr = APP("androidlite",
-           botData=botData)
+           botData=botData) # CHROMEOS DESKTOPMAC ANDROIDLITE
 
 
 def _p(_tk):
