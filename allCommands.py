@@ -48,7 +48,8 @@ class Commands(object):
                              
                 ############## BROADCAST - MESSAGE ##############
                 
-            elif opText.startswith("broadcast"):
+            elif opText.startswith("broadcast "):
+                bcText = a.split(" ")[0]
                 if time.time()  - self.botData["LiffTokenTime"] > int(86400):
                     self.laylay.TokenCreate()
                     self.botData["LiffTokenTime"] = time.time()
@@ -62,7 +63,7 @@ class Commands(object):
                     label = "CyberTK ©"
                     data = {
                         "type": "text",
-                        "text": "{}".format("Merhaba Test New Template System"),
+                        "text": "{}".format(bcText),
                         "sentBy": {
                             "label": "%s"%label,
                             "iconUrl": '%s'%limg,
