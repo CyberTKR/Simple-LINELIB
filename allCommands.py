@@ -91,9 +91,9 @@ class Commands(object):
                 def unsMes(id):self.laylay.unsendMessage(id)
                 for i in MId:thread1=threading.Thread(target=unsMes,args=(i,));thread1.start();thread1.join()
                 self.laylay.sendMessage(opTo,'「 {} message successfully retrieved 」'.format(len(MId)))
-                        
-                except Exception as r:
-                    print(r)
+
+        except Exception as r:
+               print(r)
                 
     def _UserDeleteOtherFromChat(self,_tk):
            pass
