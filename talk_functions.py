@@ -34,8 +34,7 @@ class APP(object):
             try:
                 self.gLiffControlGroup()
                 self.gLiffControlToken()
-            except Exception as e:
-                print(e);pass
+            except:pass
         self._tpath = self._RunTransPort("/S4")
         self._ppath = self._RunTransPort("/P5")
         self.liff  = self._LiffTransPort()
@@ -85,7 +84,10 @@ UserToken: {}
         authToken,certificate = authResult["authToken"],authResult["Certificate"]
         print(f'authToken: {authToken}')
         print(f'Certificate: {certificate}')
-        self._tokenLogin(authToken)
+        if authToken:
+            self._tokenLogin(authToken)
+            self.botData["UserToken"] = authToken
+            self.backupData()
         
         
     def _app(self,appid):
