@@ -9,8 +9,15 @@ botData = json.load(botData)
 
 # if you will use template don't use androidlite
 
-_tkr = APP("desktopmac",
-           botData=botData) # CHROMEOS DESKTOPMAC ANDROIDLITE
+AppName = "desktopmac"
+
+if botData["UserToken"] != "":
+    try:
+        _tkr = APP(AppName,botData["UserToken"],botData=botData)
+    except:
+        _tkr = APP(AppName,botData=botData) # CHROMEOS DESKTOPMAC ANDROIDLITE
+else:
+    _tkr = APP(AppName,botData=botData) # CHROMEOS DESKTOPMAC ANDROIDLITE
 
 
 def _p(_tk):
