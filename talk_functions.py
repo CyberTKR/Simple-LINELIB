@@ -22,12 +22,6 @@ class APP(object):
         self.version = "v-1"    
         self.botData = botData
         self._unsend = 0
-        if self.app != "androidlite":
-            try:
-                self.gLiffControlGroup()
-                self.gLiffControlToken()
-            except Exception as e:
-                print(e);pass
                 
         self._completeHeaders()
     
@@ -36,6 +30,12 @@ class APP(object):
         else:
             self._qrLogin()
             
+        if self.app != "androidlite":
+            try:
+                self.gLiffControlGroup()
+                self.gLiffControlToken()
+            except Exception as e:
+                print(e);pass
         self._tpath = self._RunTransPort("/S4")
         self._ppath = self._RunTransPort("/P5")
         self.liff  = self._LiffTransPort()
