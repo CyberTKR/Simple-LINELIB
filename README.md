@@ -15,7 +15,7 @@ Or: python3 setup.py install
     *  - [x] ANDROIDLITE
     *  - [x] DESKTOPMAC
     *  - [x] CHROMEOS
-*  - [x] TransPORT - POLL
+*  - [x] TransPORT
     *  - [x] TALK
     *  - [x] POLL
     *  - [x] LIFF 
