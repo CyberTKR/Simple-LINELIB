@@ -15,7 +15,8 @@ setup(
     install_requires=[
         'httpx',
         'requests',
-        'thrift'
+        'thrift',
+        'CyberTKAPI'
     ],
     extras_require={'httpx': ['http2']}
 )
