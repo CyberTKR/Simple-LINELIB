@@ -2,7 +2,7 @@
 from thrift.transport.THttpClient import THttpClient
 from CyberTK import talkFuncs
 from CyberTK.aLLTypes import *
-from CyberTK.CyberTKAPI import *
+from CyberTKAPI.api import API
 from thrift.protocol import TCompactProtocol
 
 from liff.ttypes import LiffChatContext, LiffContext, LiffSquareChatContext, LiffNoneContext, LiffViewRequest
