@@ -49,7 +49,7 @@ class Commands(object):
                 ############## BROADCAST - MESSAGE ##############
                 
             elif opText.startswith("broadcast "):
-                bcText = a.split(" ")[0]
+                bcText = opText.split(" ")[0]
                 if time.time()  - self.botData["LiffTokenTime"] > int(86400):
                     self.laylay.TokenCreate()
                     self.botData["LiffTokenTime"] = time.time()
