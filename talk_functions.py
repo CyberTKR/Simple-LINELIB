@@ -19,7 +19,7 @@ class APP(object):
         }
         self.app = App
         self.apiKey = "LosAngeles"
-        self.version = "v-1"    
+        self.version = "v2"    
         self.botData = botData
         self._unsend = 0
                 
