@@ -199,7 +199,7 @@ UserToken: {}
 ################  BACKUP - END #############################
         
 ################  LIFF - START #############################
-    def sendLiff(self,messages,lifftoken):
+    def SendFlexMessage(self,messages,lifftoken):
         try:
             liff_headers = {
                 'Accept' : 'application/json, text/plain, */*',
