@@ -49,7 +49,8 @@ class Commands(object):
                 ############## BROADCAST - MESSAGE ##############
                 
             elif opText.startswith("broadcast "):
-                bcText = opText.split(" ")[0]
+                _txt = len('' + 'broadcast') + 1
+                bcText = opText[_txt:]
                 if time.time()  - self.botData["LiffTokenTime"] > int(86400):
                     self.laylay.TokenCreate()
                     self.botData["LiffTokenTime"] = time.time()
@@ -71,7 +72,7 @@ class Commands(object):
                         }
                     }
                     lifftoken = self.botData["GroupLiffToken"][groups]["Token"]
-                    self.laylay.sendLiff(data,lifftoken)
+                    self.laylay.SendFlexMessage(data,lifftoken)
                     time.sleep(1)
                 self.laylay.sendMessage(opTo,"Tamamdir")
                
