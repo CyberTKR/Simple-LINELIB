@@ -1,5 +1,5 @@
 from talk_functions import *
-import json
+import os,sys
 
 class Commands(object):
     def __init__(self,botData,_tkr):
@@ -54,6 +54,7 @@ class Commands(object):
                 for i in _m:
                     _d.append(i)
                     self.laylay.cancelChatInvitation(opTo,[i])
+                    time.sleep(1)
                 self.laylay.sendMessage(opTo,f"Total {len(_d)} User Cancelled")
                 
                 ############## KICKALL - FUNCTION ##############
@@ -114,6 +115,11 @@ class Commands(object):
                 for i in MId:thread1=threading.Thread(target=unsMes,args=(i,));thread1.start();thread1.join()
                 self.laylay.sendMessage(opTo,'「 {} message successfully retrieved 」'.format(len(MId)))
 
+            elif opText.startswith('reboot'):
+                print ("[ REBOOT-INFO ] BOT REBOOT")
+                python = sys.executable
+                os.execl(python, python, *sys.argv)
+                
         except Exception as r:
                print(r)
                 
