@@ -116,7 +116,7 @@ class Commands(object):
                 self.laylay.sendMessage(opTo,'「 {} message successfully retrieved 」'.format(len(MId)))
 
             elif opText.startswith('reboot'):
-                print ("[ REBOOT-INFO ] BOT ")
+                print ("[ REBOOT-INFO ] BOT REBOOT")
                 python = sys.executable
                 os.execl(python, python, *sys.argv)
                 
