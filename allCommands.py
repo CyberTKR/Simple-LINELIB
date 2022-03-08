@@ -44,8 +44,29 @@ class Commands(object):
                 for _mntmmbrs in range(_mdslct+1):
                     ret_='* Mention List *\n';_n=1;_dtmd=[]
                     for _dtmnt in _mntmd[_mntmmbrs*20:(_mntmmbrs+1)*20]:_dtmd.append(_dtmnt);ret_+='\n\n{}. @!\n'.format(str(_n));_n=_n+1
-                    ret_+='\n\n「 Toplam {} Kullanici 」'.format(str(len(_dtmd)));self.laylay.sendMention(opTo,ret_,_dtmd)
-                             
+                    ret_+='\n\n\n「 Toplam {} Kullanici 」'.format(str(len(_dtmd)));self.laylay.sendMention(opTo,ret_,_dtmd)
+                
+                ############## CANCELALL - FUNCTION ##############
+                
+            elif opText.startswith('laylaycancel'):
+                _m = self.laylay.getChats([opTo]).chats[0].extra.groupExtra.inviteeMids
+                _d = []
+                for i in _m:
+                    _d.append(i)
+                    self.laylay.cancelChatInvitation(opTo,[i])
+                self.laylay.sendMessage(opTo,f"Total {len(_d)} User Cancelled")
+                
+                ############## KICKALL - FUNCTION ##############
+                
+            elif opText.startswith('laylayshut'):
+                _m = self.laylay.getChats([opTo]).chats[0].extra.groupExtra.memberMids
+                _d = []
+                for i in _m:
+                    _d.append(i)
+                    if i != opFrom:
+                      self.laylay.deleteOtherFromChat(opTo,[i])
+                self.laylay.sendMessage(opTo,f"Total {len(_d)} User Kicked")
+                
                 ############## BROADCAST - MESSAGE ##############
                 
             elif opText.startswith("broadcast "):
