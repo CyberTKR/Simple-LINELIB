@@ -26,20 +26,13 @@ def runTokenBot(botData, AppName):
        else:
             _tkr = APP(AppName,botData=botData)
     except TalkException as LineTalkExcept:
-        import sys,os
         if LineTalkExcept.code == 8:
-            print(f"\n| Error Code => {LineTalkExcept.code}  \n| Error Reason => {LineTalkExcept.reason} \n| Error Parameters => {LineTalkExcept.parameterMap}\n")
-            botData["UserToken"] = ""
-            def backupData():
-                f = codecs.open('Data.json','w','utf-8')
-                json.dump(botData, f, sort_keys=True, indent=4, ensure_ascii=False)
-                return True
-            backupData()
-            print ("[ REBOOT-INFO ] BOT REBOOT")
-            python = sys.executable
-            os.execl(python, python, *sys.argv)
+            try:
+                _tkr = APP(AppName,botData=botData)
+            except:
+                  APP.GoodLinerror(LineTalkExcept)
         else:
-            print(f"\n| Error Code => {LineTalkExcept.code}  \n| Error Reason => {LineTalkExcept.reason} \n| Error Parameters => {LineTalkExcept.parameterMap}\n")
+            APP.GoodLinerror(LineTalkExcept)
     return _tkr
 
 _tkr = runTokenBot(botData, AppName)
