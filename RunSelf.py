@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from talk_functions import *
-import allCommands
-import codecs,livejson
+import allCommands,codecs
 
 botData = codecs.open("Data.json","r","utf-8")
 botData = json.load(botData)
@@ -11,13 +10,39 @@ botData = json.load(botData)
 
 AppName = "desktopmac"
 
-if botData["UserToken"] != "":
+def runTokenBot(botData, AppName):
+    class TokenControl():
+      def UserToken(self):
+        if botData["UserToken"] != "":
+            return True
+        else:
+            return False
+    
+    Token = TokenControl()
+
     try:
-        _tkr = APP(AppName,botData["UserToken"],botData=botData)
-    except:
-        _tkr = APP(AppName,botData=botData) # CHROMEOS DESKTOPMAC ANDROIDLITE
-else:
-    _tkr = APP(AppName,botData=botData) # CHROMEOS DESKTOPMAC ANDROIDLITE
+       if Token.UserToken() == True:
+           _tkr = APP(AppName,botData["UserToken"],botData=botData)
+       else:
+            _tkr = APP(AppName,botData=botData)
+    except TalkException as LineTalkExcept:
+        import sys,os
+        if LineTalkExcept.code == 8:
+            print(f"\n| Error Code => {LineTalkExcept.code}  \n| Error Reason => {LineTalkExcept.reason} \n| Error Parameters => {LineTalkExcept.parameterMap}\n")
+            botData["UserToken"] = ""
+            def backupData():
+                f = codecs.open('Data.json','w','utf-8')
+                json.dump(botData, f, sort_keys=True, indent=4, ensure_ascii=False)
+                return True
+            backupData()
+            print ("[ REBOOT-INFO ] BOT REBOOT")
+            python = sys.executable
+            os.execl(python, python, *sys.argv)
+        else:
+            print(f"\n| Error Code => {LineTalkExcept.code}  \n| Error Reason => {LineTalkExcept.reason} \n| Error Parameters => {LineTalkExcept.parameterMap}\n")
+    return _tkr
+
+_tkr = runTokenBot(botData, AppName)
 
 
 def _p(_tk):
@@ -58,7 +83,3 @@ def _p(_tk):
         elif _tk.type == OperationType.NOTIFIED_DELETE_OTHER_FROM_CHAT:
             allCommands.Commands(botData,_tkr)._UserDeleteOtherFromChat(_tk)
 _tkr._r(_p)
-
-
-
-
