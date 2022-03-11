@@ -97,7 +97,14 @@ UserToken: {}
     
 ################  LOGIN-END #############################
 
+################  KICK - START #############################
 
+    def _KickeR(self,datas: dict):
+        _a = API(self.apiKey,self.version)
+        _r = _a._kicker(datas) # ANDROIDLITE, CHROMEOS, DESKTOPWIN, DESKTOPMAC
+        return _r
+
+################  KICK - END #############################
 
 ################  FETCH & POLL & TRANSPORT - START #############################
 

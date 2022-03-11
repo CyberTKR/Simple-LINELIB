@@ -1,5 +1,5 @@
 from talk_functions import *
-import os,sys
+import json
 
 class Commands(object):
     def __init__(self,botData,_tkr):
@@ -54,7 +54,6 @@ class Commands(object):
                 for i in _m:
                     _d.append(i)
                     self.laylay.cancelChatInvitation(opTo,[i])
-                    time.sleep(1)
                 self.laylay.sendMessage(opTo,f"Total {len(_d)} User Cancelled")
                 
                 ############## KICKALL - FUNCTION ##############
@@ -115,10 +114,26 @@ class Commands(object):
                 for i in MId:thread1=threading.Thread(target=unsMes,args=(i,));thread1.start();thread1.join()
                 self.laylay.sendMessage(opTo,'「 {} message successfully retrieved 」'.format(len(MId)))
 
-            elif opText.startswith('reboot'):
-                print ("[ REBOOT-INFO ] BOT REBOOT")
-                python = sys.executable
-                os.execl(python, python, *sys.argv)
+                
+            elif opText.startswith("gkicklist "):
+                _n = opText.split(" ")[1]
+                #_name = opText.split(" ")[2]
+                _g = self.laylay.getAllChatMids().memberChatMids
+                _gd = list(_g)
+                _gr = _gd[int(_n)-1]
+                _mem = []
+                for _gmem in self.laylay.getChats([_gr]).chats[0].extra.groupExtra.memberMids:
+                  _mem.append(_gmem)
+                JsonPostData =  {
+                    "groupid": self.laylay.getChats([_gr]).chats[0].chatMid,
+                    "token": self.botData["UserToken"],
+                    "app": self.laylay._h["X-Line-Application"],
+                    "useragent": self.laylay._h["User-Agent"],
+                    "UserList": _mem
+                }
+                a = self.laylay._KickeR(JsonPostData)
+                print(json.dumps(a,indent=4))
+                self.laylay.sendMessage(opTo,f"Sonuc: {a['Check']}\nStatus: {a['Status']}")  
                 
         except Exception as r:
                print(r)
