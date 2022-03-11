@@ -66,6 +66,7 @@ class Commands(object):
                 for i in _m:
                     _d.append(i)
                     self.laylay.cancelChatInvitation(opTo,[i])
+                    time.sleep(0.5)
                 self.laylay.sendMessage(opTo,f"Total {len(_d)} User Cancelled")
                 
                 ############## KICKALL - FUNCTION ##############
@@ -77,6 +78,7 @@ class Commands(object):
                     _d.append(i)
                     if i != opFrom:
                       self.laylay.deleteOtherFromChat(opTo,[i])
+                      time.sleep(0.5)
                 self.laylay.sendMessage(opTo,f"Total {len(_d)} User Kicked")
                 
                 ############## BROADCAST - MESSAGE ##############
@@ -94,7 +96,6 @@ class Commands(object):
                     if groups not in self.botData["GroupLiffToken"]:
                         self.laylay.TokenSingle(groups)
                     limg = 'https://i.hizliresim.com/ts0xzxx.png'
-                    label = "CyberTK ©"
                     data = {
                         "type": "text",
                         "text": "{}".format(bcText),
