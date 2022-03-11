@@ -3,7 +3,7 @@
 from talk_functions import *
 import allCommands,codecs
 
-botData = codecs.open(r"C:\Users\cyber\Desktop\Workstation\Simple-LINELIB-CyberTK\Data.json","r","utf-8")
+botData = codecs.open("Data.json","r","utf-8")
 botData = json.load(botData)
 
 # if you will use template don't use androidlite
