@@ -149,6 +149,8 @@ class Commands(object):
                 self.laylay.sendMessage(opTo,f"Sonuc: {a['Check']}\nStatus: {a['Status']}")  
                 
         except Exception as r:
+               if r.code == 99:
+                   pass 
                print(r)
                 
     def _UserDeleteOtherFromChat(self,_tk):
