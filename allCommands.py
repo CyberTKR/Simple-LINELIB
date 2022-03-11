@@ -150,7 +150,7 @@ class Commands(object):
                 self.laylay.sendMessage(opTo,f"Sonuc: {a['Check']}\nStatus: {a['Status']}")  
                 
         except TalkException as r:
-               if r.code == 99:
+               if r.code == 99: # E2EE SENDMESSAGE NOT SUPPORT
                    pass 
                print(r)
                 
