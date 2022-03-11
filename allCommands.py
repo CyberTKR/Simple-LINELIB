@@ -30,7 +30,7 @@ class Commands(object):
 7. Broadcast
 8. Unsend
 9. Laylayshut
-10. Gkicklist [GNumber]
+10. Gkicklist [GNumber] 
 """)
                 ############## GROUP - LIST ##############
                 
