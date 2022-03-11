@@ -1,1 +1,1 @@
-__all__ = ['aLLTypes', 'Modulethrift', 'talkFuncs','CyberTKAPI']
+__all__ = ['aLLTypes', 'Modulethrift', 'talkFuncs']
