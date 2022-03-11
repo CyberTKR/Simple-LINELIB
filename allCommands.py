@@ -19,7 +19,19 @@ class Commands(object):
             if opText.startswith("hello"):
                 self.laylay.sendMessage(opTo,"Hello I'm CyberTK?")
                 
-                
+            if opText.startswith("help"):
+                self.laylay.sendMessage(opTo,"""* Help List *
+1. Glist
+2. Tagall
+3. Unsend [Number]
+4. Liff
+5. Laylaycancel
+6. Laylayshut
+7. Broadcast
+8. Unsend
+9. Laylayshut
+10. Gkicklist [GNumber]
+""")
                 ############## GROUP - LIST ##############
                 
             elif opText.startswith("glist"):
@@ -75,7 +87,7 @@ class Commands(object):
                 if time.time()  - self.botData["LiffTokenTime"] > int(86400):
                     self.laylay.TokenCreate()
                     self.botData["LiffTokenTime"] = time.time()
-                    self.backupData()
+                    self.laylay.backupData()
                     print("True")
                 else:print("False")
                 for groups in self.laylay.getAllChatMids().memberChatMids:
