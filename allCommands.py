@@ -99,7 +99,7 @@ class Commands(object):
                         "type": "text",
                         "text": "{}".format(bcText),
                         "sentBy": {
-                            "label": "%s"%label,
+                            "label": f"{self.profile.displayName}",
                             "iconUrl": '%s'%limg,
                             "linkUrl": "line://nv/profilePopup/mid=u84e53963a1e708c353e4b16d932e0da0"
                         }
