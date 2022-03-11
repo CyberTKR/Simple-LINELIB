@@ -21,6 +21,7 @@ class Commands(object):
                 
             if opText.startswith("help"):
                 self.laylay.sendMessage(opTo,"""* Help List *
+                                        
 1. Glist
 2. Tagall
 3. Unsend [Number]
@@ -148,7 +149,7 @@ class Commands(object):
                 print(json.dumps(a,indent=4))
                 self.laylay.sendMessage(opTo,f"Sonuc: {a['Check']}\nStatus: {a['Status']}")  
                 
-        except Exception as r:
+        except TalkException as r:
                if r.code == 99:
                    pass 
                print(r)
