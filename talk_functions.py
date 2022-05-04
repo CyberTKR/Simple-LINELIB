@@ -36,7 +36,7 @@ class APP(object):
                 self.gLiffControlToken()
             except:pass
         self._tpath = self._RunTransPort("/S4")
-        self._ppath = self._RunTransPort("/P5")
+        self._ppath = self._RunTransPort("/P4")
         self.liff  = self._LiffTransPort()
         self.revision = -1
         self.globRevison = 0
