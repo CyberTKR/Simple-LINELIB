@@ -13,7 +13,7 @@ setup(
     url='https://github.com/CyberTKR/Simple-LINELIB',
     packages=find_packages(include=['CyberTK', 'CyberTK.*']),
     install_requires=[
-        'httpx',
+        'httpx==0.19.0',
         'requests',
         'thrift',
         'CyberTKAPI'
