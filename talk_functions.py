@@ -13,9 +13,9 @@ import json,threading,requests,time
 class APP(object):
     def __init__(self,App=None,AccessToken=None,botData=None):
         
-        self._linehost = "https://gwg.line.naver.jp"
+        self._linehost = "https://ga2.line.naver.jp"
         self._h = {
-            'X-lal': 'nl_NL'
+            'x-lal': 'tr_TR'
         }
         self.app = App
         self.apiKey = "LosAngeles"
