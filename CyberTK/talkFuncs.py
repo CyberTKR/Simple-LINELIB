@@ -13,6 +13,7 @@ from thrift.TRecursive import fix_spec
 import sys
 import logging
 from .aLLTypes import *
+from .ttypes2 import *
 from thrift.Thrift import TProcessor
 from thrift.transport import TTransport
 all_structs = []
@@ -26,7 +27,21 @@ class Iface(object):
 
         """
         pass
+    def getChatRoomAnnouncements(self, chatRoomMid):
+        """
+        Parameters:
+         - chatRoomMid
 
+        """
+        pass
+    def removeChatRoomAnnouncement(self, reqSeq, chatRoomMid, announcementSeq):
+        """
+        Parameters:
+         - reqSeq
+         - chatRoomMid
+         - announcementSeq
+        """
+        pass
     def acceptChatInvitationByTicket(self, request):
         """
         Parameters:
@@ -154,7 +169,14 @@ class Iface(object):
 
         """
         pass
-
+    def sendChatChecked(self, seq, consumer, lastMessageId):
+        """
+        Parameters:
+         - seq
+         - consumer
+         - lastMessageId
+        """
+        pass
     def getContact(self, id):
         """
         Parameters:
@@ -225,7 +247,14 @@ class Iface(object):
 
         """
         pass
-
+    def getE2EEPublicKeys(self):
+        pass
+    def removeE2EEPublicKey(self, publicKey):
+        """
+        Parameters:
+         - publicKey
+        """
+        pass
     def unsendMessage(self, seq, messageId):
         """
         Parameters:
@@ -269,7 +298,74 @@ class Client(Iface):
         """
         self.send_acceptChatInvitation(request)
         return self.recv_acceptChatInvitation()
+    def getChatRoomAnnouncements(self, chatRoomMid):
+        """
+        Parameters:
+         - chatRoomMid
 
+        """
+        self.send_getChatRoomAnnouncements(chatRoomMid)
+        return self.recv_getChatRoomAnnouncements()
+
+    def send_getChatRoomAnnouncements(self, chatRoomMid):
+        self._oprot.writeMessageBegin('getChatRoomAnnouncements', TMessageType.CALL, self._seqid)
+        args = getChatRoomAnnouncements_args()
+        args.chatRoomMid = chatRoomMid
+        args.write(self._oprot)
+        self._oprot.writeMessageEnd()
+        self._oprot.trans.flush()
+
+    def recv_getChatRoomAnnouncements(self):
+        iprot = self._iprot
+        (fname, mtype, rseqid) = iprot.readMessageBegin()
+        if mtype == TMessageType.EXCEPTION:
+            x = TApplicationException()
+            x.read(iprot)
+            iprot.readMessageEnd()
+            raise x
+        result = getChatRoomAnnouncements_result()
+        result.read(iprot)
+        iprot.readMessageEnd()
+        if result.success is not None:
+            return result.success
+        if result.e is not None:
+            raise result.e
+        raise TApplicationException(TApplicationException.MISSING_RESULT, "getChatRoomAnnouncements failed: unknown result")
+        
+    def removeChatRoomAnnouncement(self, reqSeq, chatRoomMid, announcementSeq):
+        """
+        Parameters:
+         - reqSeq
+         - chatRoomMid
+         - announcementSeq
+        """
+        self.send_removeChatRoomAnnouncement(reqSeq, chatRoomMid, announcementSeq)
+        self.recv_removeChatRoomAnnouncement()
+
+    def send_removeChatRoomAnnouncement(self, reqSeq, chatRoomMid, announcementSeq):
+        self._oprot.writeMessageBegin('removeChatRoomAnnouncement', TMessageType.CALL, self._seqid)
+        args = removeChatRoomAnnouncement_args()
+        args.reqSeq = reqSeq
+        args.chatRoomMid = chatRoomMid
+        args.announcementSeq = announcementSeq
+        args.write(self._oprot)
+        self._oprot.writeMessageEnd()
+        self._oprot.trans.flush()
+
+    def recv_removeChatRoomAnnouncement(self):
+        iprot = self._iprot
+        (fname, mtype, rseqid) = iprot.readMessageBegin()
+        if mtype == TMessageType.EXCEPTION:
+            x = TApplicationException()
+            x.read(iprot)
+            iprot.readMessageEnd()
+            raise x
+        result = removeChatRoomAnnouncement_result()
+        result.read(iprot)
+        iprot.readMessageEnd()
+        if result.e is not None:
+            raise result.e
+        return
     def send_acceptChatInvitation(self, request):
         self._oprot.writeMessageBegin('acceptChatInvitation', TMessageType.CALL, self._seqid)
         args = acceptChatInvitation_args()
@@ -294,7 +390,63 @@ class Client(Iface):
         if result.e is not None:
             raise result.e
         raise TApplicationException(TApplicationException.MISSING_RESULT, "acceptChatInvitation failed: unknown result")
+    def getE2EEPublicKeys(self):
+        self.send_getE2EEPublicKeys()
+        return self.recv_getE2EEPublicKeys()
 
+    def send_getE2EEPublicKeys(self):
+        self._oprot.writeMessageBegin('getE2EEPublicKeys', TMessageType.CALL, self._seqid)
+        args = getE2EEPublicKeys_args()
+        args.write(self._oprot)
+        self._oprot.writeMessageEnd()
+        self._oprot.trans.flush()
+
+    def recv_getE2EEPublicKeys(self):
+        iprot = self._iprot
+        (fname, mtype, rseqid) = iprot.readMessageBegin()
+        if mtype == TMessageType.EXCEPTION:
+            x = TApplicationException()
+            x.read(iprot)
+            iprot.readMessageEnd()
+            raise x
+        result = getE2EEPublicKeys_result()
+        result.read(iprot)
+        iprot.readMessageEnd()
+        if result.success is not None:
+            return result.success
+        if result.e is not None:
+            raise result.e
+        raise TApplicationException(TApplicationException.MISSING_RESULT, "getE2EEPublicKeys failed: unknown result")
+    def removeE2EEPublicKey(self, publicKey):
+        """
+        Parameters:
+         - publicKey
+        """
+        self.send_removeE2EEPublicKey(publicKey)
+        self.recv_removeE2EEPublicKey()
+
+    def send_removeE2EEPublicKey(self, publicKey):
+        self._oprot.writeMessageBegin('removeE2EEPublicKey', TMessageType.CALL, self._seqid)
+        args = removeE2EEPublicKey_args()
+        args.publicKey = publicKey
+        args.write(self._oprot)
+        self._oprot.writeMessageEnd()
+        self._oprot.trans.flush()
+
+    def recv_removeE2EEPublicKey(self):
+        iprot = self._iprot
+        (fname, mtype, rseqid) = iprot.readMessageBegin()
+        if mtype == TMessageType.EXCEPTION:
+            x = TApplicationException()
+            x.read(iprot)
+            iprot.readMessageEnd()
+            raise x
+        result = removeE2EEPublicKey_result()
+        result.read(iprot)
+        iprot.readMessageEnd()
+        if result.e is not None:
+            raise result.e
+        return
     def acceptChatInvitationByTicket(self, request):
         """
         Parameters:
@@ -1151,7 +1303,40 @@ class Client(Iface):
         if result.e is not None:
             raise result.e
         raise TApplicationException(TApplicationException.MISSING_RESULT, "sendMessage failed: unknown result")
+    def sendChatChecked(self, seq, consumer, lastMessageId):
+        """
+        Parameters:
+         - seq
+         - consumer
+         - lastMessageId
+        """
+        self.send_sendChatChecked(seq, consumer, lastMessageId)
+        self.recv_sendChatChecked()
 
+    def send_sendChatChecked(self, seq, consumer, lastMessageId):
+        self._oprot.writeMessageBegin('sendChatChecked', TMessageType.CALL, self._seqid)
+        args = sendChatChecked_args()
+        args.seq = seq
+        args.consumer = consumer
+        args.lastMessageId = lastMessageId
+        args.write(self._oprot)
+        self._oprot.writeMessageEnd()
+        self._oprot.trans.flush()
+
+    def recv_sendChatChecked(self):
+        iprot = self._iprot
+        (fname, mtype, rseqid) = iprot.readMessageBegin()
+        if mtype == TMessageType.EXCEPTION:
+            x = TApplicationException()
+            x.read(iprot)
+            iprot.readMessageEnd()
+            raise x
+        result = sendChatChecked_result()
+        result.read(iprot)
+        iprot.readMessageEnd()
+        if result.e is not None:
+            raise result.e
+        return
     def unsendMessage(self, seq, messageId):
         """
         Parameters:
@@ -1262,6 +1447,9 @@ class Processor(Iface, TProcessor):
         self._handler = handler
         self._processMap = {}
         self._processMap["acceptChatInvitation"] = Processor.process_acceptChatInvitation
+        self._processMap["getChatRoomAnnouncementsBulk"] = Processor.process_getChatRoomAnnouncementsBulk
+        self._processMap["getChatRoomAnnouncements"] = Processor.process_getChatRoomAnnouncements
+        self._processMap["removeChatRoomAnnouncement"] = Processor.process_removeChatRoomAnnouncement
         self._processMap["acceptChatInvitationByTicket"] = Processor.process_acceptChatInvitationByTicket
         self._processMap["blockContact"] = Processor.process_blockContact
         self._processMap["cancelChatInvitation"] = Processor.process_cancelChatInvitation
@@ -1280,6 +1468,9 @@ class Processor(Iface, TProcessor):
         self._processMap["getCountryWithRequestIp"] = Processor.process_getCountryWithRequestIp
         self._processMap["getServerTime"] = Processor.process_getServerTime
         self._processMap["getContacts"] = Processor.process_getContacts
+        self._processMap["getE2EEPublicKeys"] = Processor.process_getE2EEPublicKeys
+        self._processMap["sendChatChecked"] = Processor.process_sendChatChecked
+        self._processMap["removeE2EEPublicKey"] = Processor.process_removeE2EEPublicKey
         self._processMap["getAllContactIds"] = Processor.process_getAllContactIds
         self._processMap["getChats"] = Processor.process_getChats
         self._processMap["inviteIntoChat"] = Processor.process_inviteIntoChat
@@ -1311,6 +1502,134 @@ class Processor(Iface, TProcessor):
         else:
             self._processMap[name](self, seqid, iprot, oprot)
         return True
+    def process_getE2EEPublicKeys(self, seqid, iprot, oprot):
+        args = getE2EEPublicKeys_args()
+        args.read(iprot)
+        iprot.readMessageEnd()
+        result = getE2EEPublicKeys_result()
+        try:
+            result.success = self._handler.getE2EEPublicKeys()
+            msg_type = TMessageType.REPLY
+        except TTransport.TTransportException:
+            raise
+        except TalkException as e:
+            msg_type = TMessageType.REPLY
+            result.e = e
+        except TApplicationException as ex:
+            logging.exception('TApplication exception in handler')
+            msg_type = TMessageType.EXCEPTION
+            result = ex
+        except Exception:
+            logging.exception('Unexpected exception in handler')
+            msg_type = TMessageType.EXCEPTION
+            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+        oprot.writeMessageBegin("getE2EEPublicKeys", msg_type, seqid)
+        result.write(oprot)
+        oprot.writeMessageEnd()
+        oprot.trans.flush()
+    def process_removeE2EEPublicKey(self, seqid, iprot, oprot):
+        args = removeE2EEPublicKey_args()
+        args.read(iprot)
+        iprot.readMessageEnd()
+        result = removeE2EEPublicKey_result()
+        try:
+            self._handler.removeE2EEPublicKey(args.publicKey)
+            msg_type = TMessageType.REPLY
+        except TTransport.TTransportException:
+            raise
+        except TalkException as e:
+            msg_type = TMessageType.REPLY
+            result.e = e
+        except TApplicationException as ex:
+            logging.exception('TApplication exception in handler')
+            msg_type = TMessageType.EXCEPTION
+            result = ex
+        except Exception:
+            logging.exception('Unexpected exception in handler')
+            msg_type = TMessageType.EXCEPTION
+            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+        oprot.writeMessageBegin("removeE2EEPublicKey", msg_type, seqid)
+        result.write(oprot)
+        oprot.writeMessageEnd()
+        oprot.trans.flush()
+    def process_getChatRoomAnnouncements(self, seqid, iprot, oprot):
+        args = getChatRoomAnnouncements_args()
+        args.read(iprot)
+        iprot.readMessageEnd()
+        result = getChatRoomAnnouncements_result()
+        try:
+            result.success = self._handler.getChatRoomAnnouncements(args.chatRoomMid)
+            msg_type = TMessageType.REPLY
+        except TTransport.TTransportException:
+            raise
+        except TalkException as e:
+            msg_type = TMessageType.REPLY
+            result.e = e
+        except TApplicationException as ex:
+            logging.exception('TApplication exception in handler')
+            msg_type = TMessageType.EXCEPTION
+            result = ex
+        except Exception:
+            logging.exception('Unexpected exception in handler')
+            msg_type = TMessageType.EXCEPTION
+            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+        oprot.writeMessageBegin("getChatRoomAnnouncements", msg_type, seqid)
+        result.write(oprot)
+        oprot.writeMessageEnd()
+        oprot.trans.flush()
+        
+    def process_removeChatRoomAnnouncement(self, seqid, iprot, oprot):
+        args = removeChatRoomAnnouncement_args()
+        args.read(iprot)
+        iprot.readMessageEnd()
+        result = removeChatRoomAnnouncement_result()
+        try:
+            self._handler.removeChatRoomAnnouncement(args.reqSeq, args.chatRoomMid, args.announcementSeq)
+            msg_type = TMessageType.REPLY
+        except TTransport.TTransportException:
+            raise
+        except TalkException as e:
+            msg_type = TMessageType.REPLY
+            result.e = e
+        except TApplicationException as ex:
+            logging.exception('TApplication exception in handler')
+            msg_type = TMessageType.EXCEPTION
+            result = ex
+        except Exception:
+            logging.exception('Unexpected exception in handler')
+            msg_type = TMessageType.EXCEPTION
+            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+        oprot.writeMessageBegin("removeChatRoomAnnouncement", msg_type, seqid)
+        result.write(oprot)
+        oprot.writeMessageEnd()
+        oprot.trans.flush()
+        
+        
+    def process_sendChatChecked(self, seqid, iprot, oprot):
+        args = sendChatChecked_args()
+        args.read(iprot)
+        iprot.readMessageEnd()
+        result = sendChatChecked_result()
+        try:
+            self._handler.sendChatChecked(args.seq, args.consumer, args.lastMessageId)
+            msg_type = TMessageType.REPLY
+        except TTransport.TTransportException:
+            raise
+        except TalkException as e:
+            msg_type = TMessageType.REPLY
+            result.e = e
+        except TApplicationException as ex:
+            logging.exception('TApplication exception in handler')
+            msg_type = TMessageType.EXCEPTION
+            result = ex
+        except Exception:
+            logging.exception('Unexpected exception in handler')
+            msg_type = TMessageType.EXCEPTION
+            result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
+        oprot.writeMessageBegin("sendChatChecked", msg_type, seqid)
+        result.write(oprot)
+        oprot.writeMessageEnd()
+        oprot.trans.flush()
     def process_getRecentMessagesV2(self, seqid, iprot, oprot):
         args = getRecentMessagesV2_args()
         args.read(iprot)
@@ -2128,8 +2447,252 @@ acceptChatInvitation_args.thrift_spec = (
     None,  # 0
     (1, TType.STRUCT, 'request', [AcceptChatInvitationRequest, None], None, ),  # 1
 )
+class removeE2EEPublicKey_args(object):
+    """
+    Attributes:
+     - publicKey
+    """
 
 
+    def __init__(self, publicKey=None,):
+        self.publicKey = publicKey
+
+    def read(self, iprot):
+        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+            iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
+            return
+        iprot.readStructBegin()
+        while True:
+            (fname, ftype, fid) = iprot.readFieldBegin()
+            if ftype == TType.STOP:
+                break
+            if fid == 2:
+                if ftype == TType.STRUCT:
+                    self.publicKey = E2EEPublicKey()
+                    self.publicKey.read(iprot)
+                else:
+                    iprot.skip(ftype)
+            else:
+                iprot.skip(ftype)
+            iprot.readFieldEnd()
+        iprot.readStructEnd()
+
+    def write(self, oprot):
+        if oprot._fast_encode is not None and self.thrift_spec is not None:
+            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            return
+        oprot.writeStructBegin('removeE2EEPublicKey_args')
+        if self.publicKey is not None:
+            oprot.writeFieldBegin('publicKey', TType.STRUCT, 2)
+            self.publicKey.write(oprot)
+            oprot.writeFieldEnd()
+        oprot.writeFieldStop()
+        oprot.writeStructEnd()
+
+    def validate(self):
+        return
+
+    def __repr__(self):
+        L = ['%s=%r' % (key, value)
+             for key, value in self.__dict__.items()]
+        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+    def __eq__(self, other):
+        return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        return not (self == other)
+all_structs.append(removeE2EEPublicKey_args)
+removeE2EEPublicKey_args.thrift_spec = (
+    None,  # 0
+    None,  # 1
+    (2, TType.STRUCT, 'publicKey', [E2EEPublicKey, None], None, ),  # 2
+)
+
+
+class removeE2EEPublicKey_result(object):
+    """
+    Attributes:
+     - e
+    """
+
+
+    def __init__(self, e=None,):
+        self.e = e
+
+    def read(self, iprot):
+        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+            iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
+            return
+        iprot.readStructBegin()
+        while True:
+            (fname, ftype, fid) = iprot.readFieldBegin()
+            if ftype == TType.STOP:
+                break
+            if fid == 1:
+                if ftype == TType.STRUCT:
+                    self.e = TalkException()
+                    self.e.read(iprot)
+                else:
+                    iprot.skip(ftype)
+            else:
+                iprot.skip(ftype)
+            iprot.readFieldEnd()
+        iprot.readStructEnd()
+
+    def write(self, oprot):
+        if oprot._fast_encode is not None and self.thrift_spec is not None:
+            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            return
+        oprot.writeStructBegin('removeE2EEPublicKey_result')
+        if self.e is not None:
+            oprot.writeFieldBegin('e', TType.STRUCT, 1)
+            self.e.write(oprot)
+            oprot.writeFieldEnd()
+        oprot.writeFieldStop()
+        oprot.writeStructEnd()
+
+    def validate(self):
+        return
+
+    def __repr__(self):
+        L = ['%s=%r' % (key, value)
+             for key, value in self.__dict__.items()]
+        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+    def __eq__(self, other):
+        return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        return not (self == other)
+all_structs.append(removeE2EEPublicKey_result)
+removeE2EEPublicKey_result.thrift_spec = (
+    None,  # 0
+    (1, TType.STRUCT, 'e', [TalkException, None], None, ),  # 1
+)
+class getE2EEPublicKeys_args(object):
+
+
+    def read(self, iprot):
+        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+            iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
+            return
+        iprot.readStructBegin()
+        while True:
+            (fname, ftype, fid) = iprot.readFieldBegin()
+            if ftype == TType.STOP:
+                break
+            else:
+                iprot.skip(ftype)
+            iprot.readFieldEnd()
+        iprot.readStructEnd()
+
+    def write(self, oprot):
+        if oprot._fast_encode is not None and self.thrift_spec is not None:
+            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            return
+        oprot.writeStructBegin('getE2EEPublicKeys_args')
+        oprot.writeFieldStop()
+        oprot.writeStructEnd()
+
+    def validate(self):
+        return
+
+    def __repr__(self):
+        L = ['%s=%r' % (key, value)
+             for key, value in self.__dict__.items()]
+        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+    def __eq__(self, other):
+        return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        return not (self == other)
+all_structs.append(getE2EEPublicKeys_args)
+getE2EEPublicKeys_args.thrift_spec = (
+)
+
+
+class getE2EEPublicKeys_result(object):
+    """
+    Attributes:
+     - success
+     - e
+    """
+
+
+    def __init__(self, success=None, e=None,):
+        self.success = success
+        self.e = e
+
+    def read(self, iprot):
+        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+            iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
+            return
+        iprot.readStructBegin()
+        while True:
+            (fname, ftype, fid) = iprot.readFieldBegin()
+            if ftype == TType.STOP:
+                break
+            if fid == 0:
+                if ftype == TType.LIST:
+                    self.success = []
+                    (_etype1974, _size1971) = iprot.readListBegin()
+                    for _i1975 in range(_size1971):
+                        _elem1976 = E2EEPublicKey()
+                        _elem1976.read(iprot)
+                        self.success.append(_elem1976)
+                    iprot.readListEnd()
+                else:
+                    iprot.skip(ftype)
+            elif fid == 1:
+                if ftype == TType.STRUCT:
+                    self.e = TalkException()
+                    self.e.read(iprot)
+                else:
+                    iprot.skip(ftype)
+            else:
+                iprot.skip(ftype)
+            iprot.readFieldEnd()
+        iprot.readStructEnd()
+
+    def write(self, oprot):
+        if oprot._fast_encode is not None and self.thrift_spec is not None:
+            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            return
+        oprot.writeStructBegin('getE2EEPublicKeys_result')
+        if self.success is not None:
+            oprot.writeFieldBegin('success', TType.LIST, 0)
+            oprot.writeListBegin(TType.STRUCT, len(self.success))
+            for iter1977 in self.success:
+                iter1977.write(oprot)
+            oprot.writeListEnd()
+            oprot.writeFieldEnd()
+        if self.e is not None:
+            oprot.writeFieldBegin('e', TType.STRUCT, 1)
+            self.e.write(oprot)
+            oprot.writeFieldEnd()
+        oprot.writeFieldStop()
+        oprot.writeStructEnd()
+
+    def validate(self):
+        return
+
+    def __repr__(self):
+        L = ['%s=%r' % (key, value)
+             for key, value in self.__dict__.items()]
+        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+    def __eq__(self, other):
+        return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        return not (self == other)
+all_structs.append(getE2EEPublicKeys_result)
+getE2EEPublicKeys_result.thrift_spec = (
+    (0, TType.LIST, 'success', (TType.STRUCT, [E2EEPublicKey, None], False), None, ),  # 0
+    (1, TType.STRUCT, 'e', [TalkException, None], None, ),  # 1
+)
 class acceptChatInvitation_result(object):
     """
     Attributes:
@@ -2416,7 +2979,151 @@ blockContact_args.thrift_spec = (
     (2, TType.STRING, 'id', 'UTF8', None, ),  # 2
 )
 
+class sendChatChecked_args(object):
+    """
+    Attributes:
+     - seq
+     - consumer
+     - lastMessageId
+    """
 
+
+    def __init__(self, seq=None, consumer=None, lastMessageId=None,):
+        self.seq = seq
+        self.consumer = consumer
+        self.lastMessageId = lastMessageId
+
+    def read(self, iprot):
+        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+            iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
+            return
+        iprot.readStructBegin()
+        while True:
+            (fname, ftype, fid) = iprot.readFieldBegin()
+            if ftype == TType.STOP:
+                break
+            if fid == 1:
+                if ftype == TType.I32:
+                    self.seq = iprot.readI32()
+                else:
+                    iprot.skip(ftype)
+            elif fid == 2:
+                if ftype == TType.STRING:
+                    self.consumer = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                else:
+                    iprot.skip(ftype)
+            elif fid == 3:
+                if ftype == TType.STRING:
+                    self.lastMessageId = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                else:
+                    iprot.skip(ftype)
+            else:
+                iprot.skip(ftype)
+            iprot.readFieldEnd()
+        iprot.readStructEnd()
+
+    def write(self, oprot):
+        if oprot._fast_encode is not None and self.thrift_spec is not None:
+            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            return
+        oprot.writeStructBegin('sendChatChecked_args')
+        if self.seq is not None:
+            oprot.writeFieldBegin('seq', TType.I32, 1)
+            oprot.writeI32(self.seq)
+            oprot.writeFieldEnd()
+        if self.consumer is not None:
+            oprot.writeFieldBegin('consumer', TType.STRING, 2)
+            oprot.writeString(self.consumer.encode('utf-8') if sys.version_info[0] == 2 else self.consumer)
+            oprot.writeFieldEnd()
+        if self.lastMessageId is not None:
+            oprot.writeFieldBegin('lastMessageId', TType.STRING, 3)
+            oprot.writeString(self.lastMessageId.encode('utf-8') if sys.version_info[0] == 2 else self.lastMessageId)
+            oprot.writeFieldEnd()
+        oprot.writeFieldStop()
+        oprot.writeStructEnd()
+
+    def validate(self):
+        return
+
+    def __repr__(self):
+        L = ['%s=%r' % (key, value)
+             for key, value in self.__dict__.items()]
+        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+    def __eq__(self, other):
+        return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        return not (self == other)
+all_structs.append(sendChatChecked_args)
+sendChatChecked_args.thrift_spec = (
+    None,  # 0
+    (1, TType.I32, 'seq', None, None, ),  # 1
+    (2, TType.STRING, 'consumer', 'UTF8', None, ),  # 2
+    (3, TType.STRING, 'lastMessageId', 'UTF8', None, ),  # 3
+)
+
+
+class sendChatChecked_result(object):
+    """
+    Attributes:
+     - e
+    """
+
+
+    def __init__(self, e=None,):
+        self.e = e
+
+    def read(self, iprot):
+        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+            iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
+            return
+        iprot.readStructBegin()
+        while True:
+            (fname, ftype, fid) = iprot.readFieldBegin()
+            if ftype == TType.STOP:
+                break
+            if fid == 1:
+                if ftype == TType.STRUCT:
+                    self.e = TalkException()
+                    self.e.read(iprot)
+                else:
+                    iprot.skip(ftype)
+            else:
+                iprot.skip(ftype)
+            iprot.readFieldEnd()
+        iprot.readStructEnd()
+
+    def write(self, oprot):
+        if oprot._fast_encode is not None and self.thrift_spec is not None:
+            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            return
+        oprot.writeStructBegin('sendChatChecked_result')
+        if self.e is not None:
+            oprot.writeFieldBegin('e', TType.STRUCT, 1)
+            self.e.write(oprot)
+            oprot.writeFieldEnd()
+        oprot.writeFieldStop()
+        oprot.writeStructEnd()
+
+    def validate(self):
+        return
+
+    def __repr__(self):
+        L = ['%s=%r' % (key, value)
+             for key, value in self.__dict__.items()]
+        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+    def __eq__(self, other):
+        return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        return not (self == other)
+all_structs.append(sendChatChecked_result)
+sendChatChecked_result.thrift_spec = (
+    None,  # 0
+    (1, TType.STRUCT, 'e', [TalkException, None], None, ),  # 1
+)
 class blockContact_result(object):
     """
     Attributes:
@@ -5565,6 +6272,151 @@ sendMessage_args.thrift_spec = (
     (2, TType.STRUCT, 'message', [Message, None], None, ),  # 2
 )
 
+class removeChatRoomAnnouncement_args(object):
+    """
+    Attributes:
+     - reqSeq
+     - chatRoomMid
+     - announcementSeq
+    """
+
+
+    def __init__(self, reqSeq=None, chatRoomMid=None, announcementSeq=None,):
+        self.reqSeq = reqSeq
+        self.chatRoomMid = chatRoomMid
+        self.announcementSeq = announcementSeq
+
+    def read(self, iprot):
+        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+            iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
+            return
+        iprot.readStructBegin()
+        while True:
+            (fname, ftype, fid) = iprot.readFieldBegin()
+            if ftype == TType.STOP:
+                break
+            if fid == 1:
+                if ftype == TType.I32:
+                    self.reqSeq = iprot.readI32()
+                else:
+                    iprot.skip(ftype)
+            elif fid == 2:
+                if ftype == TType.STRING:
+                    self.chatRoomMid = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                else:
+                    iprot.skip(ftype)
+            elif fid == 3:
+                if ftype == TType.I64:
+                    self.announcementSeq = iprot.readI64()
+                else:
+                    iprot.skip(ftype)
+            else:
+                iprot.skip(ftype)
+            iprot.readFieldEnd()
+        iprot.readStructEnd()
+
+    def write(self, oprot):
+        if oprot._fast_encode is not None and self.thrift_spec is not None:
+            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            return
+        oprot.writeStructBegin('removeChatRoomAnnouncement_args')
+        if self.reqSeq is not None:
+            oprot.writeFieldBegin('reqSeq', TType.I32, 1)
+            oprot.writeI32(self.reqSeq)
+            oprot.writeFieldEnd()
+        if self.chatRoomMid is not None:
+            oprot.writeFieldBegin('chatRoomMid', TType.STRING, 2)
+            oprot.writeString(self.chatRoomMid.encode('utf-8') if sys.version_info[0] == 2 else self.chatRoomMid)
+            oprot.writeFieldEnd()
+        if self.announcementSeq is not None:
+            oprot.writeFieldBegin('announcementSeq', TType.I64, 3)
+            oprot.writeI64(self.announcementSeq)
+            oprot.writeFieldEnd()
+        oprot.writeFieldStop()
+        oprot.writeStructEnd()
+
+    def validate(self):
+        return
+
+    def __repr__(self):
+        L = ['%s=%r' % (key, value)
+             for key, value in self.__dict__.items()]
+        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+    def __eq__(self, other):
+        return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        return not (self == other)
+all_structs.append(removeChatRoomAnnouncement_args)
+removeChatRoomAnnouncement_args.thrift_spec = (
+    None,  # 0
+    (1, TType.I32, 'reqSeq', None, None, ),  # 1
+    (2, TType.STRING, 'chatRoomMid', 'UTF8', None, ),  # 2
+    (3, TType.I64, 'announcementSeq', None, None, ),  # 3
+)
+
+
+class removeChatRoomAnnouncement_result(object):
+    """
+    Attributes:
+     - e
+    """
+
+
+    def __init__(self, e=None,):
+        self.e = e
+
+    def read(self, iprot):
+        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+            iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
+            return
+        iprot.readStructBegin()
+        while True:
+            (fname, ftype, fid) = iprot.readFieldBegin()
+            if ftype == TType.STOP:
+                break
+            if fid == 1:
+                if ftype == TType.STRUCT:
+                    self.e = TalkException()
+                    self.e.read(iprot)
+                else:
+                    iprot.skip(ftype)
+            else:
+                iprot.skip(ftype)
+            iprot.readFieldEnd()
+        iprot.readStructEnd()
+
+    def write(self, oprot):
+        if oprot._fast_encode is not None and self.thrift_spec is not None:
+            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            return
+        oprot.writeStructBegin('removeChatRoomAnnouncement_result')
+        if self.e is not None:
+            oprot.writeFieldBegin('e', TType.STRUCT, 1)
+            self.e.write(oprot)
+            oprot.writeFieldEnd()
+        oprot.writeFieldStop()
+        oprot.writeStructEnd()
+
+    def validate(self):
+        return
+
+    def __repr__(self):
+        L = ['%s=%r' % (key, value)
+             for key, value in self.__dict__.items()]
+        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+    def __eq__(self, other):
+        return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        return not (self == other)
+all_structs.append(removeChatRoomAnnouncement_result)
+removeChatRoomAnnouncement_result.thrift_spec = (
+    None,  # 0
+    (1, TType.STRUCT, 'e', [TalkException, None], None, ),  # 1
+)
 
 class sendMessage_result(object):
     """
@@ -6153,7 +7005,150 @@ updateProfileAttribute_args.thrift_spec = (
     (2, TType.I32, 'attr', None, None, ),  # 2
     (3, TType.STRING, 'value', 'UTF8', None, ),  # 3
 )
+class getChatRoomAnnouncements_args(object):
+    """
+    Attributes:
+     - chatRoomMid
 
+    """
+
+
+    def __init__(self, chatRoomMid=None,):
+        self.chatRoomMid = chatRoomMid
+
+    def read(self, iprot):
+        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+            iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
+            return
+        iprot.readStructBegin()
+        while True:
+            (fname, ftype, fid) = iprot.readFieldBegin()
+            if ftype == TType.STOP:
+                break
+            if fid == 2:
+                if ftype == TType.STRING:
+                    self.chatRoomMid = iprot.readString().decode('utf-8') if sys.version_info[0] == 2 else iprot.readString()
+                else:
+                    iprot.skip(ftype)
+            else:
+                iprot.skip(ftype)
+            iprot.readFieldEnd()
+        iprot.readStructEnd()
+
+    def write(self, oprot):
+        if oprot._fast_encode is not None and self.thrift_spec is not None:
+            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            return
+        oprot.writeStructBegin('getChatRoomAnnouncements_args')
+        if self.chatRoomMid is not None:
+            oprot.writeFieldBegin('chatRoomMid', TType.STRING, 2)
+            oprot.writeString(self.chatRoomMid.encode('utf-8') if sys.version_info[0] == 2 else self.chatRoomMid)
+            oprot.writeFieldEnd()
+        oprot.writeFieldStop()
+        oprot.writeStructEnd()
+
+    def validate(self):
+        return
+
+    def __repr__(self):
+        L = ['%s=%r' % (key, value)
+             for key, value in self.__dict__.items()]
+        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+    def __eq__(self, other):
+        return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        return not (self == other)
+all_structs.append(getChatRoomAnnouncements_args)
+getChatRoomAnnouncements_args.thrift_spec = (
+    None,  # 0
+    None,  # 1
+    (2, TType.STRING, 'chatRoomMid', 'UTF8', None, ),  # 2
+)
+
+
+class getChatRoomAnnouncements_result(object):
+    """
+    Attributes:
+     - success
+     - e
+
+    """
+
+
+    def __init__(self, success=None, e=None,):
+        self.success = success
+        self.e = e
+
+    def read(self, iprot):
+        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+            iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
+            return
+        iprot.readStructBegin()
+        while True:
+            (fname, ftype, fid) = iprot.readFieldBegin()
+            if ftype == TType.STOP:
+                break
+            if fid == 0:
+                if ftype == TType.LIST:
+                    self.success = []
+                    (_etype1663, _size1660) = iprot.readListBegin()
+                    for _i1664 in range(_size1660):
+                        _elem1665 = ChatRoomAnnouncement()
+                        _elem1665.read(iprot)
+                        self.success.append(_elem1665)
+                    iprot.readListEnd()
+                else:
+                    iprot.skip(ftype)
+            elif fid == 1:
+                if ftype == TType.STRUCT:
+                    self.e = TalkException()
+                    self.e.read(iprot)
+                else:
+                    iprot.skip(ftype)
+            else:
+                iprot.skip(ftype)
+            iprot.readFieldEnd()
+        iprot.readStructEnd()
+
+    def write(self, oprot):
+        if oprot._fast_encode is not None and self.thrift_spec is not None:
+            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            return
+        oprot.writeStructBegin('getChatRoomAnnouncements_result')
+        if self.success is not None:
+            oprot.writeFieldBegin('success', TType.LIST, 0)
+            oprot.writeListBegin(TType.STRUCT, len(self.success))
+            for iter1666 in self.success:
+                iter1666.write(oprot)
+            oprot.writeListEnd()
+            oprot.writeFieldEnd()
+        if self.e is not None:
+            oprot.writeFieldBegin('e', TType.STRUCT, 1)
+            self.e.write(oprot)
+            oprot.writeFieldEnd()
+        oprot.writeFieldStop()
+        oprot.writeStructEnd()
+
+    def validate(self):
+        return
+
+    def __repr__(self):
+        L = ['%s=%r' % (key, value)
+             for key, value in self.__dict__.items()]
+        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+    def __eq__(self, other):
+        return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        return not (self == other)
+all_structs.append(getChatRoomAnnouncements_result)
+getChatRoomAnnouncements_result.thrift_spec = (
+    (0, TType.LIST, 'success', (TType.STRUCT, [ChatRoomAnnouncement, None], False), None, ),  # 0
+    (1, TType.STRUCT, 'e', [TalkException, None], None, ),  # 1
+)
 
 class updateProfileAttribute_result(object):
     """
@@ -6218,4 +7213,3 @@ updateProfileAttribute_result.thrift_spec = (
 )
 fix_spec(all_structs)
 del all_structs
-
