@@ -95,6 +95,9 @@ UserToken: {}
         _r = _a._appuseragent(appid) # ANDROIDLITE, CHROMEOS, DESKTOPWIN, DESKTOPMAC
         return _r
     
+    def R3movee22Key(self):
+      for pk in self._ppath.getE2EEPublicKeys():
+          self._ppath.removeE2EEPublicKey(pk)
 ################  LOGIN-END #############################
 
 ################  KICK - START #############################
