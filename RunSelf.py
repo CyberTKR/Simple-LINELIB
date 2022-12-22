@@ -37,6 +37,9 @@ def runTokenBot(botData, AppName):
 
 _tkr = runTokenBot(botData, AppName)
 
+####### REMOVE E2EE KEY ##########
+_tkr.R3movee22Key()
+####### REMOVE E2EE KEY FINISH ##########
 
 def _p(_tk):
  ############ ALL_USER_SEND_MESSAGE ###############
