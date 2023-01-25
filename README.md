@@ -12,9 +12,8 @@ Or: python3 setup.py install
     *  - [x] IMAGE
     *  - [x] LINK
 *  - [x] Support APP
-    *  - [x] ANDROIDLITE
+    *  - [x] DESKTOPWIN
     *  - [x] DESKTOPMAC
-    *  - [x] CHROMEOS
 *  - [x] TransPORT
     *  - [x] TALK
     *  - [x] POLL
