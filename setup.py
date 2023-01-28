@@ -9,7 +9,7 @@ setup(
     description='Simple-LINELIB',
     long_description=long_description,
     author='Tolg KR',
-    author_email='tolgkr@cybertkr.com',
+    author_email='tolg@cybertkr.com',
     url='https://github.com/CyberTKR/Simple-LINELIB',
     packages=find_packages(include=['CyberTK', 'CyberTK.*']),
     install_requires=[
